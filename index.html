@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consistency Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.svg" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: grey;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <h1>Daily Consistency Tracker</h1>
+    <button id="didButton">Done</button>
+    <p>Streak: <span id="streakCount">0</span></p>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let lastClickDate = localStorage.getItem("lastClickDate");
+            let streak = parseInt(localStorage.getItem("streak")) || 0;
+            let today = new Date().toISOString().split("T")[0];
+            let button = document.getElementById("didButton");
+            
+            // Disable the button if the user has already clicked today.
+            if (lastClickDate === today) {
+                button.disabled = true;
+            } else {
+                localStorage.setItem("streak", lastClickDate ? streak : "0");
+            }
+            
+            document.getElementById("streakCount").textContent = streak;
+            
+            button.addEventListener("click", function() {
+                if (lastClickDate !== today) {
+                    streak++;
+                    localStorage.setItem("streak", streak);
+                    localStorage.setItem("lastClickDate", today);
+                    document.getElementById("streakCount").textContent = streak;
+                    button.disabled = true;
+                    
+                    // Check for weekly milestone (every 7 days)
+                    if (streak % 7 === 0) {
+                        alert("Congratulations! You've maintained a weekly streak of " + streak + " days!");
+                    }
+                    
+                    // Check for monthly milestone (every 30 days)
+                    if (streak % 30 === 0) {
+                        alert("Outstanding! You've achieved a monthly streak of " + streak + " days!");
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

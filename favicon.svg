@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Circle representing consistency and continuity -->
+  <circle cx="32" cy="32" r="30" fill="#007bff" />
+  <!-- Checkmark representing achievement and consistency -->
+  <path d="M20 33 l8 8 l16 -16" stroke="#ffffff" stroke-width="4" fill="none" />
+</svg>
